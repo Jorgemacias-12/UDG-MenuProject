@@ -1,5 +1,8 @@
-#include "menuHandler.h"
+#include "../headers/menuHandler.h"
+#include "../headers/utils.h"
+#include "../headers/menuData.h"
 #include <conio.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 void menuHandler(int menu)
@@ -8,6 +11,8 @@ void menuHandler(int menu)
 
 void menu()
 {
+    setTerminalColor(11, 8);
+    centerText(dataMenuControls);
 }
 
 void keyboardHandler()
