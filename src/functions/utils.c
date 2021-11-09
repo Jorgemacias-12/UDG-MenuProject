@@ -62,11 +62,17 @@ void setTerminalColor(int fgcolor, int bgcolor)
     SetConsoleTextAttribute(handler, wColor);
 }
 
-void centerText(char str[])
+void centerTextWithColor(char str[], int fgcolor, int bgcolor)
 {
     int *consoleSize = getConsoleSize();
     int newWidth = strlen(str) + (consoleSize[0] - strlen(str)) / 2;
+    WORD wColor = ((bgcolor & 0x0F) << 4) + (fgcolor & 0x0F);
+    setTerminalColor(fgcolor, bgcolor);
     printf("%*s\n", newWidth, str);
 }
 
-//
+
+void clearScreen()
+{
+    system("cls");
+}

@@ -4,6 +4,7 @@
 #include <conio.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <windows.h>
 
 void menuHandler(int menu)
 {
@@ -11,20 +12,23 @@ void menuHandler(int menu)
 
 void menu()
 {
-    setTerminalColor(11, 8);
-    centerText(dataMenuControls);
+    centerTextWithColor(dataMenuControls, 15, 3);
+    keyboardHandler();
 }
 
 void keyboardHandler()
 {
     while (1)
     {
-        system("cls");
         switch (getch())
         {
             case 13:
                 break;
             case 27:
+                clearScreen();
+                centerTextWithColor(dataMenuExit, 12, 15);
+                Sleep(1000);
+                exit(0);
                 break;
             case 72:
                 break;
