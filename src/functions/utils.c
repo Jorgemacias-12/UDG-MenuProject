@@ -3,6 +3,7 @@
 #include <cstring>
 #include <conio.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 #define BG_BLACK 0
 #define FG_BLACK 0
@@ -62,15 +63,53 @@ void setTerminalColor(int fgcolor, int bgcolor)
     SetConsoleTextAttribute(handler, wColor);
 }
 
-void centerTextWithColor(char str[], int fgcolor, int bgcolor)
+void centerTextWithColor(char str[], int fgcolor, int bgcolor, bool centerH)
 {
-    int *consoleSize = getConsoleSize();
-    int newWidth = strlen(str) + (consoleSize[0] - strlen(str)) / 2;
-    WORD wColor = ((bgcolor & 0x0F) << 4) + (fgcolor & 0x0F);
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    HANDLE handler = GetStdHandle(STD_OUTPUT_HANDLE);
+    COORD cPos;
+    int rows, columns;
+    columns = getConsoleSize()[0];
+    rows = getConsoleSize()[1];
+    cPos.X = (columns - strlen(str)) / 2;
+    if (centerH)
+    {
+        cPos.Y = (rows - 1) / 2;
+    }
+    else
+    {
+        cPos.Y = cPos.Y;
+    }
+    SetConsoleCursorPosition(handler, cPos);
     setTerminalColor(fgcolor, bgcolor);
-    printf("%*s\n", newWidth, str);
+    printf("%s\n", str);
 }
 
+/* Font Weights */
+#define FW_DONTCARE 0
+#define FW_THIN 100
+#define FW_EXTRALIGHT 200
+#define FW_LIGHT 300
+#define FW_NORMAL 400
+#define FW_MEDIUM 500
+#define FW_SEMIBOLD 600
+#define FW_BOLD 700
+#define FW_EXTRABOLD 800
+#define FW_HEAVY 900
+
+void setTerminalFontProperties(int fontSize, int fontStyle)
+{
+    HANDLE handler = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_FONT_INFOEX cfi;
+    cfi.cbSize = sizeof(cfi);
+    cfi.nFont = 0;
+    cfi.dwFontSize.X = 0;
+    cfi.dwFontSize.Y = fontSize;
+    cfi.FontFamily = FF_DONTCARE;
+    cfi.FontWeight = fontStyle;
+    wcscpy(cfi.FaceName, L"Consolas");
+    SetCurrentConsoleFontEx(handler, false, &cfi);
+}
 
 void clearScreen()
 {
