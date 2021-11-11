@@ -65,7 +65,6 @@ void setTerminalColor(int fgcolor, int bgcolor)
 
 void centerTextWithColor(char str[], int fgcolor, int bgcolor, bool centerH)
 {
-    CONSOLE_SCREEN_BUFFER_INFO csbi;
     HANDLE handler = GetStdHandle(STD_OUTPUT_HANDLE);
     COORD cPos;
     int rows, columns;
@@ -78,7 +77,7 @@ void centerTextWithColor(char str[], int fgcolor, int bgcolor, bool centerH)
     }
     else
     {
-        cPos.Y = cPos.Y;
+        cPos.Y = cPos.Y + 1;
     }
     SetConsoleCursorPosition(handler, cPos);
     setTerminalColor(fgcolor, bgcolor);
