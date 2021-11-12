@@ -1,8 +1,9 @@
 #include "../headers/utils.h"
 #include <windows.h>
-#include <cstring>
+#include <wchar.h>
 #include <conio.h>
 #include <stdio.h>
+#include <locale.h>
 #include <stdbool.h>
 
 #define BG_BLACK 0
@@ -38,6 +39,15 @@
 #define BG_WHITE 15
 #define FG_WHITE 15
 
+
+void initConsole(LPCSTR appTitle)
+{
+    setlocale(LC_ALL, "spanish");
+    SetConsoleTitle(appTitle);
+    HWND console = GetConsoleWindow();
+    SetWindowLong(console, GWL_STYLE, GetWindowLong(console, GWL_STYLE) & ~WS_MAXIMIZEBOX & ~WS_SIZEBOX);
+}
+
 int *getConsoleSize()
 {
     static int consoleSize[2];
@@ -47,6 +57,14 @@ int *getConsoleSize()
     consoleSize[0] = csbi.srWindow.Right - csbi.srWindow.Left + 1;
     consoleSize[1] = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
     return consoleSize;
+}
+
+void goToXY(int cPosX, int cPosY)
+{
+    COORD coord;
+    coord.X = cPosX;
+    coord.Y = cPosY;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
 void setTerminalColor(int fgcolor, int bgcolor)
@@ -63,14 +81,14 @@ void setTerminalColor(int fgcolor, int bgcolor)
     SetConsoleTextAttribute(handler, wColor);
 }
 
-void centerTextWithColor(char str[], int fgcolor, int bgcolor, bool centerH)
+void centerTextWithColor(wchar_t str[], int fgcolor, int bgcolor, bool centerH)
 {
     HANDLE handler = GetStdHandle(STD_OUTPUT_HANDLE);
     COORD cPos;
     int rows, columns;
     columns = getConsoleSize()[0];
     rows = getConsoleSize()[1];
-    cPos.X = (columns - strlen(str)) / 2;
+    cPos.X = (columns - wcslen(str)) / 2;
     if (centerH)
     {
         cPos.Y = (rows - 1) / 2;
@@ -81,7 +99,7 @@ void centerTextWithColor(char str[], int fgcolor, int bgcolor, bool centerH)
     }
     SetConsoleCursorPosition(handler, cPos);
     setTerminalColor(fgcolor, bgcolor);
-    printf("%s\n", str);
+    wprintf(L"%ls\n", str);
 }
 
 /* Font Weights */

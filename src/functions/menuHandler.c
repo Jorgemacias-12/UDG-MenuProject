@@ -7,25 +7,48 @@
 #include <windows.h>
 #include <stdbool.h>
 
-static int menuFlag;
+static int menuOptionX = 1;
+static int menuOptionY = 0;
+
+// Macros para el manejador de teclas
+#define LEFT_ARROW 75
+#define RIGHT_ARROW 77
+#define UP_ARROW 72
+#define DOWN_ARROW 80
+#define ENTER 13
+#define ESC 27
+
+
 
 
 void goToMenu()
 {
-    printf("Sheeesh");
+    switch (menuOptionX)
+    {
+    case 1:
+        programsMenu();
+        break;
+    case 2:
+        conceptsMenu();
+    default:
+        menuOptionX = 1;
+        break;
+    }
 }
 
-void menuHandler(int menu, int menuOption)
+void programsMenu()
 {
 }
 
-
+void conceptsMenu()
+{
+}
 
 void exitProgram()
 {
     clearScreen();
     centerTextWithColor(dataMenuExit, 12, 15, true);
-    char c=219;
+    wchar_t c = (int) 246;
     setTerminalColor(12, 0);
     HANDLE handler = GetStdHandle(STD_OUTPUT_HANDLE);
     COORD cPos;
@@ -35,10 +58,10 @@ void exitProgram()
     cPos.X = 30;
     cPos.Y = (rows / 2) + 1;
     SetConsoleCursorPosition(handler, cPos);
-    for (float i = 0; i <=90; i += 1.5)
+    for (float i = 0; i <= 90; i += 1.5)
     {
         Sleep(100);
-        printf("%c", c);
+        wprintf(L"%lc", c);
     }
     Sleep(1000);
     exit(0);
@@ -61,31 +84,40 @@ void centerCharWithColor(char character, int fgcolor, int bgcolor, bool centerH)
 
 void menu()
 {
+    initConsole(appTitle);
     centerTextWithColor(dataMenuControls, 11, 8, false);
-    centerTextWithColor(dataMenuDashboard, 11, 8, true);
+    centerTextWithColor(dataMenuOptions, 12, 0, true);
     setTerminalFontProperties(24, 700);
     keyboardHandler();
 }
 
 void keyboardHandler()
 {
+    COORD cPos;
     while (1)
     {
         switch (getch())
         {
-        case 13:
-            goToMenu();
+        case ENTER:
+            printf("Position values: X:%d Y:%d", cPos.X, cPos.Y);
+            SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cPos);
+            puts("-");
+            // goToMenu();
             break;
-        case 27:
+        case ESC:
             exitProgram();
             break;
-        case 72:
+        case UP_ARROW:
+            cPos.Y++;
             break;
-        case 75:
+        case LEFT_ARROW:
+            cPos.X--;
             break;
-        case 77:
+        case RIGHT_ARROW:
+            cPos.X++;
             break;
-        case 80:
+        case DOWN_ARROW:
+            cPos.Y--;
             break;
         }
     }
