@@ -9,9 +9,12 @@
 #include <locale.h>
 
 static int menuOptionX = 0;
-static int menuOptionY = 0;
+static int conceptMenuY = 0;
+static int programMenuY = 0;
 
 static bool isMainMenu = true;
+static bool isConceptMenu = false;
+static bool isProgramMenu = false;
 
 // Macros para el manejador de teclas
 #define LEFT_ARROW 75
@@ -38,7 +41,7 @@ void exitProgram()
     SetConsoleCursorPosition(handler, cPos);
     for (float i = 0; i <= 90; i += 1.5)
     {
-        Sleep(100);
+        Sleep(10);
         wprintf(L"%lc", c);
     }
     Sleep(1000);
@@ -49,11 +52,9 @@ void programsMenu()
 {
     int columns = getConsoleSize()[0];
     clearScreen();
-    setlocale(LC_ALL,"C");
     centerTextWithColor(dataMenuControls[1], 12, 0, false);
-    setlocale(LC_ALL,"spanish");
     COORD cPos[19];
-    for (int counter = 0; counter < 20; counter++) 
+    for (int counter = 0; counter < 20; counter++)
     {
         cPos[counter].Y = 2;
         cPos[counter].X = (columns - wcslen(dataMenuPractice[counter])) / 2;
@@ -65,10 +66,18 @@ void programsMenu()
 
 void conceptsMenu()
 {
+    int columns = getConsoleSize()[0];
     clearScreen();
-    setlocale(LC_ALL, "C");
     centerTextWithColor(dataMenuControls[1], 12, 0, false);
-    setlocale(LC_ALL, "spanish");
+    COORD cPos[25];
+    for (int counter = 0; counter < 26; counter++)
+    {
+        cPos[counter].Y = 2;
+        cPos[counter].X = (columns - wcslen(dataMenuConcepts[counter])) / 2;
+        cPos[counter].Y += counter + 1;
+        SetConsoleCursorPosition(GetStdHandle(((DWORD)-11)), cPos[counter]);
+        wprintf(L"%ls\n", dataMenuConcepts[counter]);
+    }
 }
 
 void goToMenu()
@@ -76,9 +85,11 @@ void goToMenu()
     switch (menuOptionX)
     {
     case 0:
+        isConceptMenu = true;
         conceptsMenu();
         break;
     case 1:
+        isProgramMenu = true;
         programsMenu();
         break;
     case 2:
@@ -118,18 +129,80 @@ void keyboardHandler()
         switch (getch())
         {
         case ENTER:
-            goToMenu();
-            isMainMenu = false;
+            if (isMainMenu)
+            {
+                goToMenu();
+                isMainMenu = false;
+            }
+            if (isConceptMenu)
+            {
+                printf("Selected Option: %d\n", conceptMenuY);
+            }
+            if (isProgramMenu)
+            {
+                printf("Selected Option: %d\n", programMenuY);
+            }
             break;
         case ESC:
-            clearScreen(); 
-            isMainMenu = true;
-            centerTextWithColor(dataMenuControls[0], 12,0, false);
-            centerTextWithColor(dataMenuOptions[menuOptionX], 12, 0, true);
+            if (!isMainMenu)
+            {
+                clearScreen();
+                isMainMenu = true;
+                centerTextWithColor(dataMenuControls[0], 12, 0, false);
+                centerTextWithColor(dataMenuOptions[menuOptionX], 12, 0, true);
+            }
             break;
         case UP_ARROW:
+            if (isProgramMenu)
+            {
+                if (programMenuY == 0)
+                {
+                    programMenuY = 19;
+                }
+                else
+                {
+                    programMenuY--;
+                }
+                printf("Value program: %d\n", programMenuY);
+            }
+            if (isConceptMenu)
+            {
+                if (conceptMenuY == 0)
+                {
+                    conceptMenuY = 24;
+                }
+                else
+                {
+                    conceptMenuY--;
+                }
+                printf("Value program: %d\n", conceptMenuY);
+            }
             break;
         case DOWN_ARROW:
+            if (isProgramMenu)
+            {
+                if (programMenuY == 19)
+                {
+                    programMenuY = 0;
+                }
+                else
+                {
+                    programMenuY++;
+                }
+                printf("Value program: %d\n", programMenuY);
+            }
+            if (isConceptMenu)
+            {
+                if (conceptMenuY == 24)
+                {
+                    conceptMenuY = 0;
+                }
+                else
+                {
+                    conceptMenuY++;
+                }
+                printf("Value program: %d\n", conceptMenuY);
+            }
             break;
         case LEFT_ARROW:
             // printf("Value: %d", menuOptionX); // Debes quitarlo
