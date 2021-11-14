@@ -59,12 +59,30 @@ int *getConsoleSize()
     return consoleSize;
 }
 
-void goToXY(int cPosX, int cPosY)
+void printAndGoToXY(wchar_t str[], int cPosX, int cPosY)
 {
-    COORD coord;
-    coord.X = cPosX;
-    coord.Y = cPosY;
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+    int columns = getConsoleSize()[0];
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+    COORD cPos = {csbi.dwCursorPosition.X, csbi.dwCursorPosition.Y};
+    if (cPosX == 0)
+    {
+        cPos.X = (columns - 12) / 2;
+    }
+    else
+    {
+        cPos.X = cPosX;
+    }
+    if (cPosY == 0)
+    {
+        cPos.Y;
+    }
+    else 
+    {
+        cPos.Y = cPosY;
+    }
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cPos);
+    wprintf(L"%ls", str);
 }
 
 void setTerminalColor(int fgcolor, int bgcolor)
@@ -84,10 +102,10 @@ void setTerminalColor(int fgcolor, int bgcolor)
 void centerTextWithColor(wchar_t str[], int fgcolor, int bgcolor, bool centerH)
 {
     HANDLE handler = GetStdHandle(STD_OUTPUT_HANDLE);
-    COORD cPos;
     int rows, columns;
     columns = getConsoleSize()[0];
     rows = getConsoleSize()[1];
+    COORD cPos;
     cPos.X = (columns - wcslen(str)) / 2;
     if (centerH)
     {
