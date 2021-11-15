@@ -15,6 +15,7 @@ static int programMenuY = 0;
 static bool isMainMenu = true;
 static bool isConceptMenu = false;
 static bool isProgramMenu = false;
+static bool isRunning = true;
 
 // Macros para el manejador de teclas
 #define LEFT_ARROW 75
@@ -45,7 +46,7 @@ void exitProgram()
         wprintf(L"%lc", c);
     }
     Sleep(1000);
-    exit(0);
+    isRunning = false;
 }
 
 void programsMenu()
@@ -124,7 +125,7 @@ void menu()
 
 void keyboardHandler()
 {
-    while (1)
+    while (isRunning)
     {
         switch (getch())
         {
