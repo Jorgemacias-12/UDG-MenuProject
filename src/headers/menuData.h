@@ -5,7 +5,7 @@
 #include <windows.h>
 
 wchar_t dataMenuControls[2][100] = {L"| [DERECHA] ==> | <== [IZQUIERDA] | [ENTER] SELCCIONAR |",
-                                    L"| [ARRIBA] v | ^ [ABAJO] | [ENTER] SELCCIONAR | [ESC] REGRESAR |"};
+                                    L"| [ARRIBA] ^ | v [ABAJO] | [ENTER] SELCCIONAR | [ESC] REGRESAR |"};
 
 wchar_t dataMenuOptions[3][40] = {L"| [CONCEPTOS] | EJERCICIOS | SALIR |",
                                   L"| CONCEPTOS | [EJERCICIOS] | SALIR |",

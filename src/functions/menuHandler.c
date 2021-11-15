@@ -63,6 +63,7 @@ void programsMenu()
         SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cPos[counter]);
         wprintf(L"%ls\n", dataMenuPractice[counter]);
     }
+    isProgramMenu = true;
 }
 
 void conceptsMenu()
@@ -79,6 +80,7 @@ void conceptsMenu()
         SetConsoleCursorPosition(GetStdHandle(((DWORD)-11)), cPos[counter]);
         wprintf(L"%ls\n", dataMenuConcepts[counter]);
     }
+    isConceptMenu = true;
 }
 
 void goToMenu()
@@ -86,11 +88,9 @@ void goToMenu()
     switch (menuOptionX)
     {
     case 0:
-        isConceptMenu = true;
         conceptsMenu();
         break;
     case 1:
-        isProgramMenu = true;
         programsMenu();
         break;
     case 2:
@@ -135,13 +135,16 @@ void keyboardHandler()
                 goToMenu();
                 isMainMenu = false;
             }
-            if (isConceptMenu)
+            if (!_kbhit()) 
             {
-                printf("Selected Option: %d\n", conceptMenuY);
-            }
-            if (isProgramMenu)
-            {
-                printf("Selected Option: %d\n", programMenuY);
+                if (getch() == ENTER && isConceptMenu)
+                {
+                    printf("Hello there!\n");
+                }
+                if (getch() == ENTER && isProgramMenu)
+                {
+                    printf("Hello there!\n");
+                }
             }
             break;
         case ESC:
@@ -149,9 +152,12 @@ void keyboardHandler()
             {
                 clearScreen();
                 isMainMenu = true;
+                isConceptMenu = false;
+                isProgramMenu = false;
                 centerTextWithColor(dataMenuControls[0], 12, 0, false);
                 centerTextWithColor(dataMenuOptions[menuOptionX], 12, 0, true);
             }
+            
             break;
         case UP_ARROW:
             if (isProgramMenu)
