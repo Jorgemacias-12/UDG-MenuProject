@@ -13,9 +13,8 @@ static int conceptMenuY = 0;
 static int programMenuY = 0;
 
 static bool isMainMenu = true;
-static bool isConceptMenu = false;
-static bool isProgramMenu = false;
 static bool isRunning = true;
+static bool isSubMenu = false;
 
 // Macros para el manejador de teclas
 #define LEFT_ARROW 75
@@ -23,14 +22,14 @@ static bool isRunning = true;
 #define UP_ARROW 72
 #define DOWN_ARROW 80
 #define ENTER 13
-#define ESC 27
+#define ESC 27 
+#define EasterEgg 9
 
 void exitProgram()
 {
     clearScreen();
-    centerTextWithColor(dataMenuExit, 12, 15, true);
+    centerTextWithColor(dataMenuExit, 10, 0, true);
     int c = 219;
-    setTerminalColor(12, 0);
     HANDLE handler = GetStdHandle(STD_OUTPUT_HANDLE);
     COORD cPos;
     int columns, rows;
@@ -63,7 +62,6 @@ void programsMenu()
         SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cPos[counter]);
         wprintf(L"%ls\n", dataMenuPractice[counter]);
     }
-    isProgramMenu = true;
 }
 
 void conceptsMenu()
@@ -80,10 +78,9 @@ void conceptsMenu()
         SetConsoleCursorPosition(GetStdHandle(((DWORD)-11)), cPos[counter]);
         wprintf(L"%ls\n", dataMenuConcepts[counter]);
     }
-    isConceptMenu = true;
 }
 
-void goToMenu()
+void goToSubMenu()
 {
     switch (menuOptionX)
     {
@@ -125,122 +122,66 @@ void menu()
 
 void keyboardHandler()
 {
-    while (isRunning)
+    while(isRunning)
     {
-        switch (getch())
+        switch(getch())
         {
-        case ENTER:
-            if (isMainMenu)
-            {
-                goToMenu();
-                isMainMenu = false;
-            }
-            if (!_kbhit()) 
-            {
-                if (getch() == ENTER && isConceptMenu)
+            case EasterEgg:
+                if (isMainMenu)
                 {
-                    printf("Hello there!\n");
+                    MessageBox(NULL, "Jorge y Aaron", "Creado con amor por", MB_OK);
                 }
-                if (getch() == ENTER && isProgramMenu)
+                break;
+            case ESC:
+                if (isSubMenu) 
                 {
-                    printf("Hello there!\n");
+                    clearScreen();
+                    isMainMenu = true;
+                    isSubMenu = false;
+                    centerTextWithColor(dataMenuControls[0], 12, 0, false);
+                    centerTextWithColor(dataMenuOptions[0], 12, 0, true);
                 }
-            }
-            break;
-        case ESC:
-            if (!isMainMenu)
-            {
-                clearScreen();
-                isMainMenu = true;
-                isConceptMenu = false;
-                isProgramMenu = false;
-                centerTextWithColor(dataMenuControls[0], 12, 0, false);
-                centerTextWithColor(dataMenuOptions[menuOptionX], 12, 0, true);
-            }
-            
-            break;
-        case UP_ARROW:
-            if (isProgramMenu)
-            {
-                if (programMenuY == 0)
+                break;
+            case ENTER:
+                if (isMainMenu) 
                 {
-                    programMenuY = 19;
+                    goToSubMenu();
+                    isMainMenu = false;
+                    isSubMenu = true;
                 }
-                else
+                break;
+            case UP_ARROW:
+                break;
+            case DOWN_ARROW:
+                break;
+            case LEFT_ARROW:
+                if (isMainMenu) 
                 {
-                    programMenuY--;
+                    if (menuOptionX == 0)
+                    {
+                        menuOptionX = 2;
+                    }
+                    else
+                    {
+                        menuOptionX--;
+                    }
+                    centerTextWithColor(dataMenuOptions[menuOptionX], 12, 0, true);
                 }
-                printf("Value program: %d\n", programMenuY);
-            }
-            if (isConceptMenu)
-            {
-                if (conceptMenuY == 0)
+                break;
+            case RIGHT_ARROW:
+                if (isMainMenu) 
                 {
-                    conceptMenuY = 24;
+                    if (menuOptionX == 2)
+                    {
+                        menuOptionX = 0;
+                    }
+                    else
+                    {
+                        menuOptionX++;
+                    }
+                    centerTextWithColor(dataMenuOptions[menuOptionX], 12, 0, true);
                 }
-                else
-                {
-                    conceptMenuY--;
-                }
-                printf("Value program: %d\n", conceptMenuY);
-            }
-            break;
-        case DOWN_ARROW:
-            if (isProgramMenu)
-            {
-                if (programMenuY == 19)
-                {
-                    programMenuY = 0;
-                }
-                else
-                {
-                    programMenuY++;
-                }
-                printf("Value program: %d\n", programMenuY);
-            }
-            if (isConceptMenu)
-            {
-                if (conceptMenuY == 24)
-                {
-                    conceptMenuY = 0;
-                }
-                else
-                {
-                    conceptMenuY++;
-                }
-                printf("Value program: %d\n", conceptMenuY);
-            }
-            break;
-        case LEFT_ARROW:
-            // printf("Value: %d", menuOptionX); // Debes quitarlo
-            if (isMainMenu)
-            {
-                if (menuOptionX == 0)
-                {
-                    menuOptionX = 2;
-                }
-                else
-                {
-                    menuOptionX--;
-                }
-                centerTextWithColor(dataMenuOptions[menuOptionX], 12, 0, true);
-            }
-            break;
-        case RIGHT_ARROW:
-            // printf("Value: %d", menuOptionX); // Debes quitarlo
-            if (isMainMenu)
-            {
-                if (menuOptionX == 2)
-                {
-                    menuOptionX = 0;
-                }
-                else
-                {
-                    menuOptionX++;
-                }
-                centerTextWithColor(dataMenuOptions[menuOptionX], 12, 0, true);
-            }
-            break;
+                break;
         }
     }
 }
