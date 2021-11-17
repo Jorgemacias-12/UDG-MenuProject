@@ -54,7 +54,33 @@ wchar_t dataMenuPractice[19][50] = {L"1. BINARIO A DECIMAL",
                                     L"17. AGENDA",
                                     L"18. EXTRAER VOCALES, CONSONANTES Y DÍGITOS",
                                     L"19. MOSTRAR, AGREGAR Y VACIAR EN PILA"};
-                                    
+
+char dataConceptsRoute[25][40] = {"concepts/1.1.txt",
+                                  "concepts/1.2.txt",
+                                  "concepts/1.3.txt",
+                                  "concepts/1.4.txt",
+                                  "concepts/1.5.txt",
+                                  "concepts/1.6.txt",
+                                  "concepts/1.7.txt",
+                                  "concepts/1.8.txt",
+                                  "concepts/1.9.txt",
+                                  "concepts/1.10.txt",
+                                  "concepts/1.11.txt",
+                                  "concepts/1.12.txt",
+                                  "concepts/1.13.txt",
+                                  "concepts/1.14.txt",
+                                  "concepts/1.15.txt",
+                                  "concepts/1.16.txt",
+                                  "concepts/1.17.txt",
+                                  "concepts/1.18.txt",
+                                  "concepts/1.19.txt",
+                                  "concepts/1.20.txt",
+                                  "concepts/1.21.txt",
+                                  "concepts/1.22.txt",
+                                  "concepts/1.23.txt",
+                                  "concepts/1.24.txt",
+                                  "concepts/1.25.txt"};
+
 wchar_t dataMenuExit[] = L"ADIÓS USUARIO:";
 
 LPCTSTR appTitle = "PROYECTO MENU";
