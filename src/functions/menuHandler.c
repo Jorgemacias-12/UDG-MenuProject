@@ -29,6 +29,152 @@ static COORD programsPos[19];
 #define ESC 27 
 #define EasterEgg 9
 
+void goToProgramMenu(int program){
+    switch(program){
+        case 0:
+            clearScreen();
+            centerTextWithColor(dataMenuControls[2], 12, 0, false);
+            system("BinaryToDecimal.exe");
+            if(getch() == ESC)
+            {
+                clearScreen();
+                programsMenu();
+            }
+            break;
+        case 1:
+
+            break;
+        case 2:
+
+            break;
+        case 3:
+
+            break;
+        case 4:
+
+            break;
+        case 5:
+
+            break;
+        case 6:
+
+            break;
+        case 7:
+
+            break;
+        case 8:
+
+            break;
+        case 9:
+
+            break;
+        case 10:
+
+            break;
+        case 11:
+
+            break;
+        case 12:
+
+            break;
+        case 13:
+
+            break;
+        case 14:
+
+            break;
+        case 15:
+
+            break;
+        case 16:
+
+            break;
+        case 17:
+
+            break;
+        case 18:
+
+            break;
+
+    }
+}
+
+void goToConceptsMenu(int concept){
+    switch(concept){
+        case 0:
+            clearScreen();
+            centerTextWithColor(dataMenuControls[3], 12, 0, false);
+            FILE *file;
+            int character;
+            file=fopen("1.1.txt","r");
+            while((character=fgetc(file))!=EOF){
+                putchar(character);
+            }
+            fclose(file);
+            if(getch() == ESC)
+            {
+                clearScreen();
+                conceptsMenu();
+            }
+            break;
+        case 1:
+
+            break;
+        case 2:
+
+            break;
+        case 3:
+
+            break;
+        case 4:
+
+            break;
+        case 5:
+
+            break;
+        case 6:
+
+            break;
+        case 7:
+
+            break;
+        case 8:
+
+            break;
+        case 9:
+
+            break;
+        case 10:
+
+            break;
+        case 11:
+
+            break;
+        case 12:
+
+            break;
+        case 13:
+
+            break;
+        case 14:
+
+            break;
+        case 15:
+
+            break;
+        case 16:
+
+            break;
+        case 17:
+
+            break;
+        case 18:
+
+            break;
+
+    }
+}
+
 void exitProgram()
 {
     clearScreen();
@@ -193,6 +339,15 @@ void keyboardHandler()
                     goToSubMenu();
                     isMainMenu = false;
                 }
+                if (isProgramMenu && getch() == ENTER)
+                {
+                    goToProgramMenu(programMenuY);
+                }
+                if (isConceptMenu && getch() == ENTER)
+                {
+                    goToConceptsMenu(conceptMenuY);
+                }
+                
                 break;
             case UP_ARROW:
                 if (isConceptMenu)

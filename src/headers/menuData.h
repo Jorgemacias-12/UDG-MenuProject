@@ -4,8 +4,10 @@
 #include <wchar.h>
 #include <windows.h>
 
-wchar_t dataMenuControls[2][100] = {L"| [DERECHA] ==> | <== [IZQUIERDA] | [ENTER] SELCCIONAR |",
-                                    L"| [ARRIBA] ^ | v [ABAJO] | [ENTER] SELCCIONAR | [ESC] REGRESAR |"};
+wchar_t dataMenuControls[4][100] = {L"| [DERECHA] ==> | <== [IZQUIERDA] | [ENTER] SELCCIONAR |",
+                                    L"| [ARRIBA] ^ | v [ABAJO] | [ENTER] SELCCIONAR | [ESC] REGRESAR |",
+                                    L"| [ESC] REGRESAR AL TERMINAR EL PROGRAMA |",
+                                    L"| [ESC] REGRESAR AL TERMINAR EL CONCEPTO |"};
 
 wchar_t dataMenuOptions[3][40] = {L"| [CONCEPTOS] | EJERCICIOS | SALIR |",
                                   L"| CONCEPTOS | [EJERCICIOS] | SALIR |",
