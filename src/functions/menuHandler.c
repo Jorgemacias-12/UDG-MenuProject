@@ -14,7 +14,11 @@ static int programMenuY = 0;
 
 static bool isMainMenu = true;
 static bool isRunning = true;
-static bool isSubMenu = false;
+static bool isConceptMenu = false;
+static bool isProgramMenu = false;
+
+static COORD conceptsPos[25];
+static COORD programsPos[19];
 
 // Macros para el manejador de teclas
 #define LEFT_ARROW 75
@@ -28,7 +32,7 @@ static bool isSubMenu = false;
 void exitProgram()
 {
     clearScreen();
-    centerTextWithColor(dataMenuExit, 10, 0, true);
+    centerTextWithColor(dataMenuExit, 0, 0, true);
     int c = 219;
     HANDLE handler = GetStdHandle(STD_OUTPUT_HANDLE);
     COORD cPos;
@@ -39,6 +43,7 @@ void exitProgram()
     cPos.Y = (rows / 2) + 1;
     setlocale(LC_ALL, "C");
     SetConsoleCursorPosition(handler, cPos);
+    setTerminalColor(14, 3);
     for (float i = 0; i <= 90; i += 1.5)
     {
         Sleep(10);
@@ -53,15 +58,18 @@ void programsMenu()
     int columns = getConsoleSize()[0];
     clearScreen();
     centerTextWithColor(dataMenuControls[1], 12, 0, false);
-    COORD cPos[19];
     for (int counter = 0; counter < 20; counter++)
     {
-        cPos[counter].Y = 2;
-        cPos[counter].X = (columns - wcslen(dataMenuPractice[counter])) / 2;
-        cPos[counter].Y += counter + 1;
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cPos[counter]);
+        programsPos[counter].Y = 2;
+        programsPos[counter].X = (columns - wcslen(dataMenuPractice[counter])) / 2;
+        programsPos[counter].Y += counter + 1;
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), programsPos[counter]);
         wprintf(L"%ls\n", dataMenuPractice[counter]);
     }
+    programsPos[0].X = 30;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), programsPos[0]);
+    printf("==>");
+    setTerminalColor(0, 3);
 }
 
 void conceptsMenu()
@@ -69,15 +77,18 @@ void conceptsMenu()
     int columns = getConsoleSize()[0];
     clearScreen();
     centerTextWithColor(dataMenuControls[1], 12, 0, false);
-    COORD cPos[25];
     for (int counter = 0; counter < 26; counter++)
     {
-        cPos[counter].Y = 2;
-        cPos[counter].X = (columns - wcslen(dataMenuConcepts[counter])) / 2;
-        cPos[counter].Y += counter + 1;
-        SetConsoleCursorPosition(GetStdHandle(((DWORD)-11)), cPos[counter]);
+       conceptsPos[counter].Y = 2;
+       conceptsPos[counter].X = (columns - wcslen(dataMenuConcepts[counter])) / 2;
+       conceptsPos[counter].Y += counter + 1;
+        SetConsoleCursorPosition(GetStdHandle(((DWORD)-11)),conceptsPos[counter]);
         wprintf(L"%ls\n", dataMenuConcepts[counter]);
     }
+    conceptsPos[0].X = 30;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), conceptsPos[0]);
+    printf("==>");
+    setTerminalColor(0, 3);
 }
 
 void goToSubMenu()
@@ -86,9 +97,11 @@ void goToSubMenu()
     {
     case 0:
         conceptsMenu();
+        isConceptMenu = true;
         break;
     case 1:
         programsMenu();
+        isProgramMenu = true;
         break;
     case 2:
         exitProgram();
@@ -117,7 +130,37 @@ void menu()
     centerTextWithColor(dataMenuControls[0], 11, 8, false);
     centerTextWithColor(dataMenuOptions[0], 12, 0, true);
     setTerminalFontProperties(24, 700);
+    setTerminalColor(5, 3);
     keyboardHandler();
+}
+
+void printMarker(int subMenu)
+{
+    switch(subMenu)
+    {
+        case 0:
+            for (int subMenuIterator_c = 0; subMenuIterator_c < 26; subMenuIterator_c++)
+            {
+                conceptsPos[subMenuIterator_c].X = 30;
+                SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), conceptsPos[subMenuIterator_c]);
+                printf("   ");
+            }
+            conceptsPos[conceptMenuY].X = 30;
+            SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), conceptsPos[conceptMenuY]);
+            printf("==>");
+            break;
+        case 1:
+            for (int subMenuIterator_p = 0; subMenuIterator_p < 20; subMenuIterator_p++) 
+            {
+                programsPos[subMenuIterator_p].X = 30;
+                SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), programsPos[subMenuIterator_p]);
+                printf("   ");
+            }
+            programsPos[programMenuY].X = 30;
+            SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), programsPos[programMenuY]);
+            printf("==>");
+            break;
+    }
 }
 
 void keyboardHandler()
@@ -133,13 +176,15 @@ void keyboardHandler()
                 }
                 break;
             case ESC:
-                if (isSubMenu) 
+                if (isConceptMenu || isProgramMenu)
                 {
                     clearScreen();
                     isMainMenu = true;
-                    isSubMenu = false;
+                    isConceptMenu = false;
+                    isProgramMenu = false;
                     centerTextWithColor(dataMenuControls[0], 12, 0, false);
                     centerTextWithColor(dataMenuOptions[0], 12, 0, true);
+                    setTerminalColor(5, 3);
                 }
                 break;
             case ENTER:
@@ -147,12 +192,59 @@ void keyboardHandler()
                 {
                     goToSubMenu();
                     isMainMenu = false;
-                    isSubMenu = true;
                 }
                 break;
             case UP_ARROW:
+                if (isConceptMenu)
+                {
+                    if (conceptMenuY == 0) 
+                    {
+                        conceptMenuY = 25;
+                    }
+                    else 
+                    {
+                        conceptMenuY--;
+                    }
+                    printMarker(0);
+                }
+                if (isProgramMenu)
+                {
+                    if (programMenuY == 0) 
+                    {
+                        programMenuY = 19;
+                    }
+                    else 
+                    {
+                        programMenuY--;
+                    }
+                    printMarker(1);
+                }
                 break;
             case DOWN_ARROW:
+                if (isConceptMenu) 
+                {
+                    if (conceptMenuY == 25) 
+                    {
+                        conceptMenuY = 0;
+                    }
+                    else 
+                    {
+                        conceptMenuY++;
+                    }
+                    printMarker(0);
+                }
+                if (isProgramMenu) 
+                {
+                    if (programMenuY == 19) 
+                    {
+                        programMenuY = 0;
+                    }
+                    else
+                    {
+                        programMenuY++;
+                    }
+                    printMarker(1);
+                }
                 break;
             case LEFT_ARROW:
                 if (isMainMenu) 
@@ -166,6 +258,7 @@ void keyboardHandler()
                         menuOptionX--;
                     }
                     centerTextWithColor(dataMenuOptions[menuOptionX], 12, 0, true);
+                    setTerminalColor(5, 3);
                 }
                 break;
             case RIGHT_ARROW:
@@ -180,6 +273,7 @@ void keyboardHandler()
                         menuOptionX++;
                     }
                     centerTextWithColor(dataMenuOptions[menuOptionX], 12, 0, true);
+                    setTerminalColor(5, 3);
                 }
                 break;
         }
