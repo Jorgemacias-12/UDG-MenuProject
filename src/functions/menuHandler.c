@@ -16,6 +16,8 @@ static bool isMainMenu = true;
 static bool isRunning = true;
 static bool isConceptMenu = false;
 static bool isProgramMenu = false;
+static bool isConceptShowing = false; 
+static bool isProgramRunning = false; 
 
 static COORD conceptsPos[25];
 static COORD programsPos[19];
@@ -33,6 +35,7 @@ void exitToProgramsMenu()
 {
     if(getch() == ESC)
     {
+        isProgramRunning = false;
         clearScreen();
         programsMenu();
     }
@@ -40,6 +43,7 @@ void exitToProgramsMenu()
 
 void goToProgramMenu(int program)
 {
+    isProgramRunning = true;
     switch(program)
     {
         case 0:
@@ -164,19 +168,20 @@ void exitToConceptsMenu()
 {
     if(getch() == ESC)
     {
+        isConceptShowing = false;
         clearScreen();
         conceptsMenu();
     }
 }
 
 void goToConceptsMenu(int concept){
+    isConceptShowing = true;
     FILE *file;
     int character;
     switch(concept){
         case 0:
             clearScreen();
             centerTextWithColor(dataMenuControls[3], 12, 0, false);
-            printf("\n");
             file=fopen(dataConceptsRoute[0],"r");
             while((character=fgetc(file))!=EOF){
                 putchar(character);
@@ -603,7 +608,7 @@ void keyboardHandler()
                 
                 break;
             case UP_ARROW:
-                if (isConceptMenu)
+                if (isConceptMenu && !isConceptShowing)
                 {
                     if (conceptMenuY == 0) 
                     {
@@ -615,7 +620,7 @@ void keyboardHandler()
                     }
                     printMarker(0);
                 }
-                if (isProgramMenu)
+                if (isProgramMenu && !isProgramRunning)
                 {
                     if (programMenuY == 0) 
                     {
@@ -629,7 +634,7 @@ void keyboardHandler()
                 }
                 break;
             case DOWN_ARROW:
-                if (isConceptMenu) 
+                if (isConceptMenu && !isConceptShowing) 
                 {
                     if (conceptMenuY == 25) 
                     {
@@ -641,7 +646,7 @@ void keyboardHandler()
                     }
                     printMarker(0);
                 }
-                if (isProgramMenu) 
+                if (isProgramMenu && !isProgramRunning) 
                 {
                     if (programMenuY == 19) 
                     {
