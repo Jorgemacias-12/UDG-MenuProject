@@ -29,147 +29,400 @@ static COORD programsPos[19];
 #define ESC 27 
 #define EasterEgg 9
 
-void goToProgramMenu(int program){
-    switch(program){
+void exitToProgramsMenu() 
+{
+    if(getch() == ESC)
+    {
+        clearScreen();
+        programsMenu();
+    }
+}
+
+void goToProgramMenu(int program)
+{
+    switch(program)
+    {
         case 0:
             clearScreen();
             centerTextWithColor(dataMenuControls[2], 12, 0, false);
-            system("BinaryToDecimal.exe");
-            if(getch() == ESC)
-            {
-                clearScreen();
-                programsMenu();
-            }
+            system(dataProgramsRoute[0]);
+            exitToProgramsMenu();
             break;
-        case 1:
-
+        case 1: 
+            clearScreen();
+            centerTextWithColor(dataMenuControls[2], 12, 0, false);
+            system(dataProgramsRoute[1]);
+            exitToProgramsMenu();
             break;
         case 2:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[2], 12, 0, false);
+            system(dataProgramsRoute[2]);
+            exitToProgramsMenu();
             break;
         case 3:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[2], 12, 0, false);
+            system(dataProgramsRoute[3]);
+            exitToProgramsMenu();
             break;
         case 4:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[2], 12, 0, false);
+            system(dataProgramsRoute[4]);
+            exitToProgramsMenu();
             break;
         case 5:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[2], 12, 0, false);
+            system(dataProgramsRoute[5]);
+            exitToProgramsMenu();
             break;
         case 6:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[2], 12, 0, false);
+            system(dataProgramsRoute[6]);
+            exitToProgramsMenu();
             break;
         case 7:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[2], 12, 0, false);
+            system(dataProgramsRoute[7]);
+            exitToProgramsMenu();
             break;
         case 8:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[2], 12, 0, false);
+            system(dataProgramsRoute[8]);
+            exitToProgramsMenu();
             break;
         case 9:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[2], 12, 0, false);
+            system(dataProgramsRoute[9]);
+            exitToProgramsMenu();
             break;
         case 10:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[2], 12, 0, false);
+            system(dataProgramsRoute[10]);
+            exitToProgramsMenu();
             break;
         case 11:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[2], 12, 0, false);
+            system(dataProgramsRoute[11]);
+            exitToProgramsMenu();
             break;
         case 12:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[2], 12, 0, false);
+            system(dataProgramsRoute[12]);
+            exitToProgramsMenu();
             break;
         case 13:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[2], 12, 0, false);
+            system(dataProgramsRoute[13]);
+            exitToProgramsMenu();
             break;
         case 14:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[2], 12, 0, false);
+            system(dataProgramsRoute[14]);
+            exitToProgramsMenu();
             break;
         case 15:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[2], 12, 0, false);
+            system(dataProgramsRoute[15]);
+            exitToProgramsMenu();
             break;
         case 16:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[2], 12, 0, false);
+            system(dataProgramsRoute[16]);
+            exitToProgramsMenu();
             break;
         case 17:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[2], 12, 0, false);
+            system(dataProgramsRoute[17]);
+            exitToProgramsMenu();
             break;
         case 18:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[2], 12, 0, false);
+            system(dataProgramsRoute[18]);
+            exitToProgramsMenu();
             break;
 
     }
 }
 
+void exitToConceptsMenu()
+{
+    if(getch() == ESC)
+    {
+        clearScreen();
+        conceptsMenu();
+    }
+}
+
 void goToConceptsMenu(int concept){
+    FILE *file;
+    int character;
     switch(concept){
         case 0:
             clearScreen();
             centerTextWithColor(dataMenuControls[3], 12, 0, false);
-            FILE *file;
-            int character;
-            file=fopen("1.1.txt","r");
+            printf("\n");
+            file=fopen(dataConceptsRoute[0],"r");
             while((character=fgetc(file))!=EOF){
                 putchar(character);
             }
             fclose(file);
-            if(getch() == ESC)
-            {
-                clearScreen();
-                conceptsMenu();
-            }
+            exitToConceptsMenu();
             break;
         case 1:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[3], 12, 0, false);
+            file=fopen(dataConceptsRoute[1],"r");
+            while((character=fgetc(file))!=EOF){
+                putchar(character);
+            }
+            fclose(file);
+            exitToConceptsMenu();
             break;
         case 2:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[3], 12, 0, false);
+            file=fopen(dataConceptsRoute[2],"r");
+            while((character=fgetc(file))!=EOF){
+                putchar(character);
+            }
+            fclose(file);
+            exitToConceptsMenu();
             break;
         case 3:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[3], 12, 0, false);
+            file=fopen(dataConceptsRoute[3],"r");
+            while((character=fgetc(file))!=EOF){
+                putchar(character);
+            }
+            fclose(file);
+            exitToConceptsMenu();
             break;
         case 4:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[3], 12, 0, false);
+            file=fopen(dataConceptsRoute[4],"r");
+            while((character=fgetc(file))!=EOF){
+                putchar(character);
+            }
+            fclose(file);
+            exitToConceptsMenu();
             break;
         case 5:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[3], 12, 0, false);
+            file=fopen(dataConceptsRoute[5],"r");
+            while((character=fgetc(file))!=EOF){
+                putchar(character);
+            }
+            fclose(file);
+            exitToConceptsMenu();
             break;
         case 6:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[3], 12, 0, false);
+            file=fopen(dataConceptsRoute[6],"r");
+            while((character=fgetc(file))!=EOF){
+                putchar(character);
+            }
+            fclose(file);
+            exitToConceptsMenu();
             break;
         case 7:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[3], 12, 0, false);
+            file=fopen(dataConceptsRoute[7],"r");
+            while((character=fgetc(file))!=EOF){
+                putchar(character);
+            }
+            fclose(file);
+            exitToConceptsMenu();
             break;
         case 8:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[3], 12, 0, false);
+            file=fopen(dataConceptsRoute[8],"r");
+            while((character=fgetc(file))!=EOF){
+                putchar(character);
+            }
+            fclose(file);
+            exitToConceptsMenu();
             break;
         case 9:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[3], 12, 0, false);
+            file=fopen(dataConceptsRoute[9],"r");
+            while((character=fgetc(file))!=EOF){
+                putchar(character);
+            }
+            fclose(file);
+            exitToConceptsMenu();
             break;
         case 10:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[3], 12, 0, false);
+            file=fopen(dataConceptsRoute[10],"r");
+            while((character=fgetc(file))!=EOF){
+                putchar(character);
+            }
+            fclose(file);
+            exitToConceptsMenu();
             break;
         case 11:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[3], 12, 0, false);
+            file=fopen(dataConceptsRoute[11],"r");
+            while((character=fgetc(file))!=EOF){
+                putchar(character);
+            }
+            fclose(file);
+            exitToConceptsMenu();
             break;
         case 12:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[3], 12, 0, false);
+            file=fopen(dataConceptsRoute[12],"r");
+            while((character=fgetc(file))!=EOF){
+                putchar(character);
+            }
+            fclose(file);
+            exitToConceptsMenu();
             break;
         case 13:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[3], 12, 0, false);
+            file=fopen(dataConceptsRoute[13],"r");
+            while((character=fgetc(file))!=EOF){
+                putchar(character);
+            }
+            fclose(file);
+            exitToConceptsMenu();
             break;
         case 14:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[3], 12, 0, false);
+            file=fopen(dataConceptsRoute[14],"r");
+            while((character=fgetc(file))!=EOF){
+                putchar(character);
+            }
+            fclose(file);
+            exitToConceptsMenu();
             break;
         case 15:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[3], 12, 0, false);
+            file=fopen(dataConceptsRoute[15],"r");
+            while((character=fgetc(file))!=EOF){
+                putchar(character);
+            }
+            fclose(file);
+            exitToConceptsMenu();
             break;
         case 16:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[3], 12, 0, false);
+            file=fopen(dataConceptsRoute[16],"r");
+            while((character=fgetc(file))!=EOF){
+                putchar(character);
+            }
+            fclose(file);
+            exitToConceptsMenu();
             break;
         case 17:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[3], 12, 0, false);
+            file=fopen(dataConceptsRoute[17],"r");
+            while((character=fgetc(file))!=EOF){
+                putchar(character);
+            }
+            fclose(file);
+            exitToConceptsMenu();
             break;
         case 18:
-
+            clearScreen();
+            centerTextWithColor(dataMenuControls[3], 12, 0, false);
+            file=fopen(dataConceptsRoute[18],"r");
+            while((character=fgetc(file))!=EOF){
+                putchar(character);
+            }
+            fclose(file);
+            exitToConceptsMenu();
+            break;
+        case 19:
+            clearScreen();
+            centerTextWithColor(dataMenuControls[3], 12, 0, false);
+            file=fopen(dataConceptsRoute[19],"r");
+            while((character=fgetc(file))!=EOF){
+                putchar(character);
+            }
+            fclose(file);
+            exitToConceptsMenu();
+            break;
+        case 20:
+            clearScreen();
+            centerTextWithColor(dataMenuControls[3], 12, 0, false);
+            file=fopen(dataConceptsRoute[20],"r");
+            while((character=fgetc(file))!=EOF){
+                putchar(character);
+            }
+            fclose(file);
+            exitToConceptsMenu();
+            break;
+        case 21:
+            clearScreen();
+            centerTextWithColor(dataMenuControls[3], 12, 0, false);
+            file=fopen(dataConceptsRoute[21],"r");
+            while((character=fgetc(file))!=EOF){
+                putchar(character);
+            }
+            fclose(file);
+            exitToConceptsMenu();
+            break;
+        case 22:
+            clearScreen();
+            centerTextWithColor(dataMenuControls[3], 12, 0, false);
+            file=fopen(dataConceptsRoute[22],"r");
+            while((character=fgetc(file))!=EOF){
+                putchar(character);
+            }
+            fclose(file);
+            exitToConceptsMenu();
+            break;
+        case 23:
+            clearScreen();
+            centerTextWithColor(dataMenuControls[3], 12, 0, false);
+            file=fopen(dataConceptsRoute[23],"r");
+            while((character=fgetc(file))!=EOF){
+                putchar(character);
+            }
+            fclose(file);
+            exitToConceptsMenu();
+            break;
+        case 24:
+            clearScreen();
+            centerTextWithColor(dataMenuControls[3], 12, 0, false);
+            file=fopen(dataConceptsRoute[24],"r");
+            while((character=fgetc(file))!=EOF){
+                putchar(character);
+            }
+            fclose(file);
+            exitToConceptsMenu();
             break;
 
     }

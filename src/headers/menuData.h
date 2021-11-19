@@ -6,8 +6,8 @@
 
 wchar_t dataMenuControls[4][100] = {L"| [DERECHA] ==> | <== [IZQUIERDA] | [ENTER] SELCCIONAR |",
                                     L"| [ARRIBA] ^ | v [ABAJO] | [ENTER] SELCCIONAR | [ESC] REGRESAR |",
-                                    L"| [ESC] REGRESAR AL TERMINAR EL PROGRAMA |",
-                                    L"| [ESC] REGRESAR AL TERMINAR EL CONCEPTO |"};
+                                    L"| [N] TERMINAR EL PROGRAMA |\n",
+                                    L"| [ESC] TERMINAR EL CONCEPTO |\n"};
 
 wchar_t dataMenuOptions[3][40] = {L"| [CONCEPTOS] | EJERCICIOS | SALIR |",
                                   L"| CONCEPTOS | [EJERCICIOS] | SALIR |",
@@ -82,6 +82,26 @@ char dataConceptsRoute[25][40] = {"concepts/1.1.txt",
                                   "concepts/1.23.txt",
                                   "concepts/1.24.txt",
                                   "concepts/1.25.txt"};
+
+char dataProgramsRoute[19][50] = {"BinaryToDecimal.exe",
+                                "UserSum.exe",
+                                "Power.exe",
+                                "TriangleArea.exe",
+                                "ThreeHighNumbers.exe",
+                                "TwentyOddNumbers.exe",
+                                "RadiusSphere.exe",
+                                "PrimeNumber.exe",
+                                "TenNumbers.exe",
+                                "SumPairNumbers.exe",
+                                "Factorial.exe",
+                                "PrimePositive.exe",
+                                "VectorMax.exe",
+                                "WeekGain.exe",
+                                "MonthGain.exe",
+                                "Order10Numbers.exe",
+                                "Schedule.exe",
+                                "CountVoCo.exe",
+                                "pile.exe"};
 
 wchar_t dataMenuExit[] = L"ADIÓS USUARIO:";
 
