@@ -1,4 +1,4 @@
-run: compileRes compile open
+run: compileRes compile
 
 compileRes:
 	@windres src/resources/resources.rc -O coff -o dist/data.res
