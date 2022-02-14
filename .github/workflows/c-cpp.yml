@@ -10,5 +10,7 @@ jobs:
     steps:
       - name: checkout repo
         uses: actions/checkout@v2
+      - name: create dist directory
+        run: mkdir dist
       - name: build application
         run: make
